@@ -14,7 +14,7 @@
           inherit system overlays;
         };
 
-        nixops-go = nixops.lib.go { inherit pkgs; };
+        nixops-lib = nixops.lib { inherit pkgs; };
 
         src = nix-filter.lib.filter {
           root = ./.;
@@ -38,24 +38,28 @@
       in
       {
         checks = {
-          go-checks = nixops-go.check {
+          go-checks = nixops-lib.go.check {
             inherit src ldflags tags buildInputs nativeBuildInputs checkDeps;
           };
         };
 
         devShells = flake-utils.lib.flattenTree rec {
-          default = nixops-go.devShell {
+          default = nixops-lib.go.devShell {
             buildInputs = with pkgs; [
+              mockgen
+              gqlgen
+              gqlgenc
+              oapi-codegen
             ];
           };
         };
 
         packages = flake-utils.lib.flattenTree rec {
-          example = nixops-go.package {
+          example = nixops-lib.go.package {
             inherit name src version ldflags buildInputs nativeBuildInputs;
           };
 
-          docker-image = nixops-go.docker-image {
+          docker-image = nixops-lib.go.docker-image {
             inherit name version buildInputs;
 
             package = example;

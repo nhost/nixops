@@ -22,10 +22,7 @@
     {
       overlays.default = import ./overlays/default.nix;
 
-      lib = {
-        go = import ./lib/go/go.nix;
-        nix = import ./lib/nix/nix.nix;
-      };
+      lib = import ./lib/lib.nix;
     } // flake-utils.lib.eachDefaultSystem (system:
       let
         pkgs = import nixpkgs {
