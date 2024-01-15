@@ -11,7 +11,7 @@ let
   ];
 in
 {
-  nixpkgs-fmt =
+  check =
     { src
     }:
     pkgs.runCommand "check-nixpkgs-fmt"
@@ -23,6 +23,6 @@ in
       }
       ''
         mkdir $out
-        nixpkgs-fmt --check ${nix-src}
+        nixpkgs-fmt --check ${src}
       '';
 }
