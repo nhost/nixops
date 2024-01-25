@@ -35,5 +35,24 @@
         checks = {
           nix-tests = nix-lib.check { src = nix-src; };
         };
+
+        devShells = flake-utils.lib.flattenTree {
+          default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              go
+              golangci-lint
+              mockgen
+              golines
+              govulncheck
+              gqlgen
+              gqlgenc
+              oapi-codegen
+              nhost-cli
+              postgresql_146
+              postgresql_146-client
+            ];
+          };
+        };
+
       });
 }

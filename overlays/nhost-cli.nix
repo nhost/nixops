@@ -1,14 +1,14 @@
 { final }:
 let
-  version = "v1.12.0";
+  version = "v1.13.0";
   dist = {
     aarch64-darwin = rec {
       url = "https://github.com/nhost/cli/releases/download/${version}/cli-${version}-darwin-arm64.tar.gz";
-      sha256 = "sha256-aXKVUNjMJOGrLsxrMj21DGhfoz7nOv+iGJyAM5EZGAM=";
+      sha256 = "0g7zq4qc2jvkj1kd9kd2y1j1hjbpcylg7p8v8v3nhnyvk9li0vgn";
     };
     x86_64-linux = rec {
       url = "https://github.com/nhost/cli/releases/download/${version}/cli-${version}-linux-amd64.tar.gz";
-      sha256 = "0jldxll6qm2c56aki5rbdn0z47g3pmvrk95gf5lsfqq28dvnymgw";
+      sha256 = "13fr478klqbdbkdw3dwv1yhpz57zcj7jr2lp39cvac81187lgrz7";
     };
   };
 
