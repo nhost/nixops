@@ -6,6 +6,14 @@ let
       url = "https://github.com/nhost/cli/releases/download/${version}/cli-${version}-darwin-arm64.tar.gz";
       sha256 = "0g7zq4qc2jvkj1kd9kd2y1j1hjbpcylg7p8v8v3nhnyvk9li0vgn";
     };
+    x86_64-darwin = rec {
+      url = "https://github.com/nhost/cli/releases/download/${version}/cli-${version}-darwin-amd64.tar.gz";
+      sha256 = "0kh593iby5sfsdki2g52f3clkcmhaa3jcxiq3b0a47cw89vrnxic";
+    };
+    aarch64-linux = rec {
+      url = "https://github.com/nhost/cli/releases/download/${version}/cli-${version}-linux-arm64.tar.gz";
+      sha256 = "0nr3wnkl4id4xzzypz9k5l52i221cv91310d2swd4a7ifn39v42q";
+    };
     x86_64-linux = rec {
       url = "https://github.com/nhost/cli/releases/download/${version}/cli-${version}-linux-amd64.tar.gz";
       sha256 = "13fr478klqbdbkdw3dwv1yhpz57zcj7jr2lp39cvac81187lgrz7";
