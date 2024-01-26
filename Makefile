@@ -10,16 +10,20 @@ else
   OS?=linux
 endif
 
+ifeq ($(CI),true)
+  build-options=--option system $(ARCH)-linux --extra-platforms ${ARCH}-linux
+endif
+
 .PHONY: build
 build:  ## Build application and places the binary under ./result/bin
-	nix build \
+	nix build $(build-options) \
 		--print-build-logs \
 		.\#devShells.$(ARCH)-$(OS).default
 
 
 .PHONY: build-dry-run
 build-dry-run:  ## Run nix flake check
-	nix build \
+	nix build $(build-options) \
 		--dry-run \
 		--json \
 		--print-build-logs \
