@@ -58,7 +58,7 @@ jobs:
     - name: "Setup nix-remote-builder in nix.conf"
       run: |
           echo "builders = ssh://${{ steps.nix-remote-builder.outputs.publicDnsName }} aarch64-linux;" >> ~/.config/nix/nix.conf
-      if: ${{ ( matrix.platform == 'aarch64' ) && steps.verify-build.outputs.BUILD_NEEDED == 'yes' }}
+      if: ${{ ( matrix.platform == 'aarch64' ) }}
 
     - name: Cache nix store
       uses: actions/cache@v4
@@ -75,7 +75,6 @@ jobs:
           !/nix/var/nix/db/reserved
         key: nix-${{ inputs.NAME }}-build-${{ runner.os }}-${{ matrix.platform }}-${{ hashFiles('nix/**.nix', 'flake.nix', 'flake.lock', '${{ inputs.PROJECT }}/**.nix') }}
         restore-keys: nix-${{ inputs.NAME }}-build-${{ runner.OS }}-${{ matrix.platform }}-main
-      if: ${{ steps.verify-build.outputs.BUILD_NEEDED == 'yes' }}
 
     - uses: docker/setup-qemu-action@v3
       if: ${{ ( matrix.platform == 'aarch64' ) }}
@@ -105,7 +104,7 @@ jobs:
             fi
             ((attempt++))
         done
-      if: ${{ ( matrix.platform == 'aarch64' ) && steps.verify-build.outputs.BUILD_NEEDED == 'yes' }}
+      if: ${{ ( matrix.platform == 'aarch64' ) }}
 
 
     - name: "Cache nix store on s3"
