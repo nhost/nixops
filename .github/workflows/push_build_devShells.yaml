@@ -1,4 +1,5 @@
 ---
+name: "push: build and cache devShells"
 on:
   pull_request:
   push:
