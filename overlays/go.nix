@@ -14,15 +14,15 @@ final: prev: rec {
 
   golangci-lint = prev.golangci-lint.override rec {
     buildGoModule = args: prev.buildGoModule.override { go = go; } (args // rec {
-      version = "1.53.3";
+      version = "1.55.2";
       src = prev.fetchFromGitHub {
         owner = "golangci";
         repo = "golangci-lint";
         rev = "v${version}";
-        sha256 = "sha256-5qTWYmr82BFuyA+lS1HwCHqdrtWScI6tuu0noRbali8=";
+        sha256 = "sha256-DO71wfDmCuziEcsme1g1uNIl3MswA+EkQcYzOYHbG+I=";
       };
 
-      vendorHash = "sha256-MEfvBlecFIXqAet3V9qHRmeUzzcsSnkfM3HMTMlxss0=";
+      vendorHash = "sha256-0+jImfMdVocOczGWeO03YXUg5yKYTu3WeJaokSlcYFM=";
 
       ldflags = [
         "-s"
