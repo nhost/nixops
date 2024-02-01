@@ -48,7 +48,7 @@
               gqlgenc
               oapi-codegen
               nhost-cli
-              postgresql_146
+              # postgresql_146
               postgresql_146-client
             ];
           };
