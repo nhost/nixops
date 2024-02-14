@@ -5,9 +5,17 @@ VERSION=$(shell cat VERSION)
 endif
 
 ifeq ($(shell uname -m),x86_64)
-  ARCH?=x86_64
+  HOST_ARCH?=x86_64
+  ARCH?=amd64
 else ifeq ($(shell uname -m),arm64)
-  ARCH?=aarch64
+  HOST_ARCH?=aarch64
+  ARCH?=arm64
+endif
+
+ifeq ($(shell uname -o),Darwin)
+  OS?=darwin
+else
+  OS?=linux
 endif
 
 ifeq ($(shell uname -o),Darwin)
@@ -43,7 +51,9 @@ check:   ## Run nix flake check
 
 .PHONY: build
 build:  ## Build application and places the binary under ./result/bin
-	nix build --print-build-logs
+	nix build \
+		--print-build-logs \
+		.\#example-$(ARCH)-$(OS)
 
 
 .PHONY: build-docker-image

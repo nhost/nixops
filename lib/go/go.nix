@@ -92,7 +92,7 @@ in
     , nativeBuildInputs
     , cgoEnabled ? 1
     , postInstall ? ""
-    }: pkgs.buildGoNhostModule {
+    }: (pkgs.buildGoNhostModule {
       inherit src version ldflags buildInputs nativeBuildInputs;
 
       pname = name;
@@ -113,7 +113,16 @@ in
         maintainers = [ "nhost" ];
         platforms = platforms.linux ++ platforms.darwin;
       };
-    };
+    }).overrideAttrs (old: old // {
+
+      buildPhase = old.buildPhase + ''
+        dir=$NIX_BUILD_TOP/go/bin/"$GOOS"_"$GOARCH"
+        if [ -d $dir ]; then
+          mv $dir/* $dir/..
+          rm -rf $dir
+        fi
+      '';
+    });
 
   docker-image =
     { name
