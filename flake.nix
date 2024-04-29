@@ -50,6 +50,7 @@
               nhost-cli
               # postgresql_146
               postgresql_146-client
+              postgresql_1411-client
             ];
           };
         };
