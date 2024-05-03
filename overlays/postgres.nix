@@ -1,16 +1,16 @@
 final: prev: rec {
-  postgresql_146 = prev.postgresql_14.overrideAttrs
+  postgresql_14_11 = prev.postgresql_14.overrideAttrs
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
-      version = "14.6";
+      version = "14.11";
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
-        hash = "sha256-UIhA/BgJ05q3InTV8Tfau5/X+0+TPaQWiu67IAae3yI=";
+        hash = "sha256-pnC9fc4i3K1Cl7JhE2s7HUoJpvVBcZViqhTKY78paKg=";
       };
     });
 
-  postgresql_146-client = postgresql_146.overrideAttrs
+  postgresql_14_11-client = postgresql_14_11.overrideAttrs
     (finalAttrs: previousAttrs: {
       buildInputs = with final.pkgs; [ zlib openssl ];
       configureFlags = [
@@ -40,20 +40,61 @@ final: prev: rec {
       outputs = [ "out" "lib" ];
     });
 
-  postgresql_1411 = prev.postgresql_14.overrideAttrs
+  postgresql_15_6 = prev.postgresql_15.overrideAttrs
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
-      version = "14.11";
+      version = "15.6";
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
-        hash = "sha256-pnC9fc4i3K1Cl7JhE2s7HUoJpvVBcZViqhTKY78paKg=";
+        hash = "sha256-hFUUbtnGnJOlfelUrq0DAsr60DXCskIXXWqh4X68svs=";
       };
     });
 
-  postgresql_1411-client = postgresql_1411.overrideAttrs
+  postgresql_15_6-client = postgresql_15_6.overrideAttrs
     (finalAttrs: previousAttrs: {
       buildInputs = with final.pkgs; [ zlib openssl ];
+      configureFlags = [
+        "--with-openssl"
+        "--without-readline"
+        "--sysconfdir=/etc"
+        "--libdir=$(lib)/lib"
+        "--with-system-tzdata=${final.pkgs.tzdata}/share/zoneinfo"
+      ];
+
+      separateDebugInfo = false;
+      buildFlags = [ ];
+      installTargets = [ "-C src/bin install" "-C ../interfaces install" ];
+
+      postInstall =
+        ''
+          cp src/bin/pg_dump/pg_dump $out/bin
+          cp src/bin/pg_dump/pg_restore $out/bin
+          cp src/bin/psql/psql $out/bin
+          moveToOutput "lib/pgxs" "$out" # looks strange, but not deleting it
+          moveToOutput "lib/libpgcommon*.a" "$out"
+          moveToOutput "lib/libpgport*.a" "$out"
+          moveToOutput "lib/libecpg*" "$out"
+        '';
+
+      postFixup = "";
+      outputs = [ "out" "lib" ];
+    });
+
+  postgresql_16_2 = prev.postgresql_16.overrideAttrs
+    (finalAttrs: previousAttrs: rec {
+      pname = "postgresql";
+      version = "16.2";
+
+      src = final.fetchurl {
+        url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
+        hash = "sha256-RG6IKU28LJCFq0twYaZG+mBLS+wDUh1epnHC5a2bKVI=";
+      };
+    });
+
+  postgresql_16_2-client = postgresql_16_2.overrideAttrs
+    (finalAttrs: previousAttrs: {
+      buildInputs = with final.pkgs; [ zlib openssl icu ];
       configureFlags = [
         "--with-openssl"
         "--without-readline"
@@ -81,4 +122,3 @@ final: prev: rec {
       outputs = [ "out" "lib" ];
     });
 }
-
