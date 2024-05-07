@@ -4,6 +4,15 @@ final: prev: rec {
       pname = "postgresql";
       version = "14.11";
 
+      LC_ALL = "en_US.UTF-8";
+      buildInputs = [ prev.glibcLocales ] ++ previousAttrs.buildInputs;
+
+      postFixup =
+        ''
+          # psql needs access to "locale" command from glibc.
+          prev.wrapProgram $out/bin/psql - -prefix PATH ":" ${prev.glibc.bin}/bin
+        '' + previousAttrs.postFixup;
+
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
         hash = "sha256-pnC9fc4i3K1Cl7JhE2s7HUoJpvVBcZViqhTKY78paKg=";
@@ -122,3 +131,5 @@ final: prev: rec {
       outputs = [ "out" "lib" ];
     });
 }
+
+
