@@ -14,15 +14,15 @@ final: prev: rec {
 
   golangci-lint = prev.golangci-lint.override rec {
     buildGoModule = args: prev.buildGoModule.override { go = go; } (args // rec {
-      version = "1.57.2";
+      version = "1.59.0";
       src = prev.fetchFromGitHub {
         owner = "golangci";
         repo = "golangci-lint";
         rev = "v${version}";
-        sha256 = "sha256-DO71wfDmCuziEcsme1g1uNIl3MswA+EkQcYzOYHbG+I=";
+        sha256 = "sha256-m4VT4jJa8AQipH1KQOYYEG84cbCS6qXORZQC8PA7838=";
       };
 
-      vendorHash = "sha256-0+jImfMdVocOczGWeO03YXUg5yKYTu3WeJaokSlcYFM=";
+      vendorHash = "sha256-ZNoBXSJsLCqRXc09/3woUCJVyeMrFjHIznXMlNz8MsI=";
 
       ldflags = [
         "-s"
@@ -68,14 +68,14 @@ final: prev: rec {
 
   govulncheck = final.buildGoModule rec {
     name = "govulncheck";
-    version = "v1.1.0";
+    version = "v1.1.1";
     src = final.fetchFromGitHub {
       owner = "golang";
       repo = "vuln";
       rev = "${version}";
-      sha256 = "sha256-sS58HyrwyRv3zYi8OgiDYnKSbyu2i3KVoSX/0wQbqGw=";
+      sha256 = "sha256-aDt4TCbs5yBeJu/Fr95uI3BvPBaclnQMuJYPUXT7S+I=";
     };
-    vendorHash = "sha256-ZHf//khvBGG+gRBKoKZo4NKoIJCQsbQfe2uT7cAHDcM=";
+    vendorHash = "sha256-YsZ9CchThybwgUjBg6hDQZ0bEEO18lidbGf9CIfzICc=";
 
     doCheck = false;
 
@@ -89,16 +89,16 @@ final: prev: rec {
 
   gqlgen = final.buildGoModule rec {
     pname = "gqlgen";
-    version = "0.17.45";
+    version = "0.17.47";
 
     src = final.fetchFromGitHub {
       owner = "99designs";
       repo = pname;
       rev = "v${version}";
-      sha256 = "sha256-iWTeI21B/xJu/LFKGYwu0ggjh/59SlE/qm+5aPzyN9U=";
+      sha256 = "sha256-1WTeI21B/xJu/LFKGYwu0ggjh/59SlE/qm+5aPzyN9U=";
     };
 
-    vendorHash = "sha256-Qk+93pnqEOf/xOfVNQ82KiDOiO6ucjffYGfwONNPRaw=";
+    vendorHash = "sha256-2k+93pnqEOf/xOfVNQ82KiDOiO6ucjffYGfwONNPRaw=";
 
     doCheck = false;
 
