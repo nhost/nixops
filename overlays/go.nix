@@ -95,10 +95,10 @@ final: prev: rec {
       owner = "99designs";
       repo = pname;
       rev = "v${version}";
-      sha256 = "sha256-1WTeI21B/xJu/LFKGYwu0ggjh/59SlE/qm+5aPzyN9U=";
+      sha256 = "sha256-0hY9jD0+0dmUQ7SJDqtbODFgztQ44IRXH4gweLCO4J4=";
     };
 
-    vendorHash = "sha256-2k+93pnqEOf/xOfVNQ82KiDOiO6ucjffYGfwONNPRaw=";
+    vendorHash = "sha256-yvmxcPSEQIJU/AUmEm5musVqHHZFhNag6EK5t/ZSHxY=";
 
     doCheck = false;
 
