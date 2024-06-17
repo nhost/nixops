@@ -138,20 +138,18 @@ final: prev: rec {
   };
 
   oapi-codegen = prev.oapi-codegen.override rec {
-    oapi-codegen = prev.oapi-codegen.override rec {
-      buildGoModule = args: final.buildGoModule (args // rec {
-        version = "2.3.0";
-        src = final.fetchFromGitHub {
-          owner = "oapi-codegen";
-          repo = "oapi-codegen";
-          rev = "v${version}";
-          sha256 = "sha256-Gcl0i3K2ncrxMSLHCPWBleRGdVIVkUo7vcp+tDNpkOw=";
-        };
+    buildGoModule = args: final.buildGoModule (args // rec {
+      version = "2.3.0";
+      src = final.fetchFromGitHub {
+        owner = "oapi-codegen";
+        repo = "oapi-codegen";
+        rev = "v${version}";
+        sha256 = "sha256-Gcl0i3K2ncrxMSLHCPWBleRGdVIVkUo7vcp+tDNpkOw=";
+      };
 
-        subPackages = [ "cmd/oapi-codegen" ];
-        vendorHash = "sha256-urPMLEaisgndbHmS1sGQ07c+VRBdxIz0wseLoSLVWQo=";
-      });
-    };
+      subPackages = [ "cmd/oapi-codegen" ];
+      vendorHash = "sha256-urPMLEaisgndbHmS1sGQ07c+VRBdxIz0wseLoSLVWQo=";
+    });
   };
 
 }
