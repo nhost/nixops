@@ -139,16 +139,16 @@ final: prev: rec {
 
   oapi-codegen = prev.oapi-codegen.override rec {
     buildGoModule = args: final.buildGoModule (args // rec {
-      version = "2.1.0";
+      version = "2.3.0";
       src = final.fetchFromGitHub {
-        owner = "deepmap";
+        owner = "oapi-codegen";
         repo = "oapi-codegen";
         rev = "v${version}";
-        sha256 = "sha256-5Bwe0THxwynuUuw7jI7KBDNC1Q4sHlnWwO2Kx5F/7PA=";
+        sha256 = "sha256-Gcl0i3K2ncrxMSLHCPWBleRGdVIVkUo7vcp+tDNpkOw=";
       };
 
       subPackages = [ "cmd/oapi-codegen" ];
-      vendorHash = "sha256-SqnFfx9bWneVEIyJS8fKe9NNcbPF4wI3qP5QvENqBrI=";
+      vendorHash = "sha256-urPMLEaisgndbHmS1sGQ07c+VRBdxIz0wseLoSLVWQo=";
     });
   };
 
