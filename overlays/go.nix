@@ -14,15 +14,15 @@ final: prev: rec {
 
   golangci-lint = prev.golangci-lint.override rec {
     buildGoModule = args: prev.buildGoModule.override { go = go; } (args // rec {
-      version = "1.59.0";
+      version = "1.59.1";
       src = prev.fetchFromGitHub {
         owner = "golangci";
         repo = "golangci-lint";
         rev = "v${version}";
-        sha256 = "sha256-m4VT4jJa8AQipH1KQOYYEG84cbCS6qXORZQC8PA7838=";
+        sha256 = "sha256-VFU/qGyKBMYr0wtHXyaMjS5fXKAHWe99wDZuSyH8opg=";
       };
 
-      vendorHash = "sha256-ZNoBXSJsLCqRXc09/3woUCJVyeMrFjHIznXMlNz8MsI=";
+      vendorHash = "sha256-yYwYISK1wM/mSlAcDSIwYRo8sRWgw2u+SsvgjH+Z/7M=";
 
       ldflags = [
         "-s"
@@ -68,14 +68,14 @@ final: prev: rec {
 
   govulncheck = final.buildGoModule rec {
     name = "govulncheck";
-    version = "v1.1.1";
+    version = "v1.1.3";
     src = final.fetchFromGitHub {
       owner = "golang";
       repo = "vuln";
       rev = "${version}";
-      sha256 = "sha256-aDt4TCbs5yBeJu/Fr95uI3BvPBaclnQMuJYPUXT7S+I=";
+      sha256 = "sha256-ydJ8AeoCnLls6dXxjI05+THEqPPdJqtAsKTriTIK9Uc=";
     };
-    vendorHash = "sha256-YsZ9CchThybwgUjBg6hDQZ0bEEO18lidbGf9CIfzICc=";
+    vendorHash = "sha256-jESQV4Na4Hooxxd0RL96GHkA7Exddco5izjnhfH6xTg=";
 
     doCheck = false;
 
@@ -89,16 +89,16 @@ final: prev: rec {
 
   gqlgen = final.buildGoModule rec {
     pname = "gqlgen";
-    version = "0.17.47";
+    version = "0.17.49";
 
     src = final.fetchFromGitHub {
       owner = "99designs";
       repo = pname;
       rev = "v${version}";
-      sha256 = "sha256-0hY9jD0+0dmUQ7SJDqtbODFgztQ44IRXH4gweLCO4J4=";
+      sha256 = "sha256-dHKK21xIc7C0Ei/4+WHrVaDMFikZxHP6hTA8zF9ZEZ8=";
     };
 
-    vendorHash = "sha256-yvmxcPSEQIJU/AUmEm5musVqHHZFhNag6EK5t/ZSHxY=";
+    vendorHash = "sha256-1NxgK/4ccUqf0m3rJkM0FXKK5wNJmCeCNnV2FyZVRoQ=";
 
     doCheck = false;
 
@@ -114,13 +114,13 @@ final: prev: rec {
 
   gqlgenc = final.buildGoModule rec {
     pname = "gqlgenc";
-    version = "0.22.0";
+    version = "0.23.2";
 
     src = final.fetchFromGitHub {
       owner = "Yamashou";
       repo = pname;
       rev = "v${version}";
-      sha256 = "sha256-hGX9DiGpJOOjQEaT9qnpeS1ODfo4pd03WlvT3aaSK2w=";
+      sha256 = "sha256-a+/X2q9Rii/8odXGICNOB7uWXd6vfqquP+wGvT/tRUo=";
     };
 
     vendorHash = "sha256-lQ2KQF+55qvscnYfm1jLK/4DdwFBaRZmv9oa/BUSoXI=";
