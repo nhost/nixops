@@ -110,6 +110,7 @@ final: prev: rec {
       postInstall =
         ''
           cp src/bin/pg_dump/pg_dump $out/bin
+          cp src/bin/pg_dump/pg_dumpall $out/bin
           cp src/bin/pg_dump/pg_restore $out/bin
           cp src/bin/psql/psql $out/bin
           moveToOutput "lib/pgxs" "$out" # looks strange, but not deleting it
