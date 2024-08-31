@@ -2,6 +2,10 @@ ifeq ($(shell uname -m),x86_64)
   ARCH?=x86_64
 else ifeq ($(shell uname -m),arm64)
   ARCH?=aarch64
+else ifeq ($(shell uname -m),aarch64)
+  ARCH?=aarch64
+else
+  ARCH?=fixme-$(shell uname -m)
 endif
 
 ifeq ($(shell uname -o),Darwin)
@@ -23,8 +27,6 @@ build:  ## Build application and places the binary under ./result/bin
 
 .PHONY: build-dry-run
 build-dry-run:  ## Run nix flake check
-	nix build $(build-options) \
-		--dry-run \
-		--json \
-		--print-build-logs \
+	@nix path-info \
+		--derivation \
 		.\#devShells.$(ARCH)-$(OS).default
