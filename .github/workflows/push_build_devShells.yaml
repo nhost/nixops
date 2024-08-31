@@ -8,19 +8,12 @@ on:
 
 jobs:
   artifacts:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-arm64-22.04-2cores
     timeout-minutes: 240
 
     permissions:
       id-token: write
       contents: write
-
-    strategy:
-      matrix:
-        platform:
-          - x86_64
-          - aarch64
-      fail-fast: true
 
     steps:
     - name: "Check out repository"
@@ -58,7 +51,7 @@ jobs:
 
     - name: "Build"
       run: |
-        make build ARCH=${{ matrix.platform }}
+        make build
 
     - name: "Cache checks"
       run: |
