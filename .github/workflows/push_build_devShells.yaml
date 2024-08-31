@@ -42,7 +42,7 @@ jobs:
     - name: "Verify if we need to build"
       id: verify-build
       run: |
-        export drvPath=$(make check-dry-run)
+        export drvPath=$(make build-dry-run)
         nix store verify --no-trust --store s3://nhost-nix-cache\?region=eu-central-1 $drvPath \
           && export BUILD_NEEDED=no \
           || export BUILD_NEEDED=yes
@@ -53,7 +53,7 @@ jobs:
       run: |
         make build
 
-    - name: "Cache checks"
+    - name: "Cache build"
       run: |
        DEPENDENCIES=($(nix-store --query --requisites --include-outputs ${{ steps.verify-build.outputs.DERIVATION_PATH }}))
        nix copy --to s3://nhost-nix-cache\?region=eu-central-1 "${DEPENDENCIES[@]}"
