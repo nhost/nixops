@@ -1,16 +1,16 @@
 final: prev: rec {
-  postgresql_14_11 = prev.postgresql_14.overrideAttrs
+  postgresql_14_13 = prev.postgresql_14.overrideAttrs
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
-      version = "14.11";
+      version = "14.13";
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
-        hash = "sha256-pnC9fc4i3K1Cl7JhE2s7HUoJpvVBcZViqhTKY78paKg=";
+        hash = "sha256-Wao8S0lasmqexp860KAijFHw/m+s82NN+tTRGX1hOlY=";
       };
     });
 
-  postgresql_14_11-client = postgresql_14_11.overrideAttrs
+  postgresql_14_13-client = postgresql_14_13.overrideAttrs
     (finalAttrs: previousAttrs: {
       buildInputs = with final.pkgs; [ zlib openssl ];
       configureFlags = [
@@ -40,18 +40,18 @@ final: prev: rec {
       outputs = [ "out" "lib" ];
     });
 
-  postgresql_15_6 = prev.postgresql_15.overrideAttrs
+  postgresql_15_8 = prev.postgresql_15.overrideAttrs
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
-      version = "15.6";
+      version = "15.8";
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
-        hash = "sha256-hFUUbtnGnJOlfelUrq0DAsr60DXCskIXXWqh4X68svs=";
+        hash = "sha256-RANRX5pp7rPv68mPMLjGlhIr/fiV6Ss7I/W452nty2o=";
       };
     });
 
-  postgresql_15_6-client = postgresql_15_6.overrideAttrs
+  postgresql_15_8-client = postgresql_15_8.overrideAttrs
     (finalAttrs: previousAttrs: {
       buildInputs = with final.pkgs; [ zlib openssl ];
       configureFlags = [
@@ -81,18 +81,18 @@ final: prev: rec {
       outputs = [ "out" "lib" ];
     });
 
-  postgresql_16_2 = prev.postgresql_16.overrideAttrs
+  postgresql_16_4 = prev.postgresql_16.overrideAttrs
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
-      version = "16.2";
+      version = "16.4";
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
-        hash = "sha256-RG6IKU28LJCFq0twYaZG+mBLS+wDUh1epnHC5a2bKVI=";
+        hash = "sha256-lxdm1kWqc+k7nvTjvkQgG09FtUdwlbBJElQD+fM4bW8=";
       };
     });
 
-  postgresql_16_2-client = postgresql_16_2.overrideAttrs
+  postgresql_16_4-client = postgresql_16_4.overrideAttrs
     (finalAttrs: previousAttrs: {
       buildInputs = with final.pkgs; [ zlib openssl icu ];
       configureFlags = [

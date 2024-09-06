@@ -48,9 +48,9 @@
               gqlgenc
               oapi-codegen
               nhost-cli
-              # postgresql_14_11-client
-              # postgresql_15_6-client
-              postgresql_16_2-client
+              # postgresql_14_13-client
+              # postgresql_15_8-client
+              postgresql_16_4-client
             ];
           };
         };
