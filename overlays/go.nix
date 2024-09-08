@@ -114,13 +114,13 @@ final: prev: rec {
 
   gqlgenc = final.buildGoModule rec {
     pname = "gqlgenc";
-    version = "0.23.2";
+    version = "0.24.0";
 
     src = final.fetchFromGitHub {
       owner = "Yamashou";
       repo = pname;
       rev = "v${version}";
-      sha256 = "sha256-a+/X2q9Rii/8odXGICNOB7uWXd6vfqquP+wGvT/tRUo=";
+      sha256 = "sha256-tKEHqo7drOwHIRCgKEXbELi0u9uRpXSwB9R1fPhv/PE=";
     };
 
     vendorHash = "sha256-lQ2KQF+55qvscnYfm1jLK/4DdwFBaRZmv9oa/BUSoXI=";
