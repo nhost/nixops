@@ -10,10 +10,10 @@ final: prev: rec {
 
     });
 
-  buildGoNhostModule = prev.buildGoModule.override { go = go; };
+  buildGoModule = prev.buildGoModule.override { go = go; };
 
   golangci-lint = prev.golangci-lint.override rec {
-    buildGoModule = args: prev.buildGoModule.override { go = go; } (args // rec {
+    buildGoModule = args: prev.final.buildGoModule (args // rec {
       version = "1.59.1";
       src = prev.fetchFromGitHub {
         owner = "golangci";
