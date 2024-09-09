@@ -10,19 +10,19 @@ final: prev: rec {
 
     });
 
-  buildGoNhostModule = prev.buildGoModule.override { go = go; };
+  buildGoModule = prev.buildGoModule.override { go = go; };
 
   golangci-lint = prev.golangci-lint.override rec {
-    buildGoModule = args: prev.buildGoModule.override { go = go; } (args // rec {
-      version = "1.59.1";
+    buildGoModule = args: final.buildGoModule (args // rec {
+      version = "1.60.3";
       src = prev.fetchFromGitHub {
         owner = "golangci";
         repo = "golangci-lint";
         rev = "v${version}";
-        sha256 = "sha256-VFU/qGyKBMYr0wtHXyaMjS5fXKAHWe99wDZuSyH8opg=";
+        sha256 = "sha256-0ScdJ5td2N8WF1dwHQ3dBSjyr1kqgrzCfBzbRg9cRrw=";
       };
 
-      vendorHash = "sha256-yYwYISK1wM/mSlAcDSIwYRo8sRWgw2u+SsvgjH+Z/7M=";
+      vendorHash = "sha256-ixeswsfx36D0Tg103swbBD8UXXLNYbxSMYDE+JOm+uw=";
 
       ldflags = [
         "-s"

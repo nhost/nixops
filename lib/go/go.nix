@@ -92,7 +92,7 @@ in
     , nativeBuildInputs
     , cgoEnabled ? 1
     , postInstall ? ""
-    }: (pkgs.buildGoNhostModule {
+    }: (pkgs.buildGoModule {
       inherit src version ldflags buildInputs nativeBuildInputs;
 
       pname = name;
