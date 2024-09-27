@@ -1,4 +1,13 @@
 final: prev: rec {
+  locales = prev.glibcLocales.override {
+    allLocales = false;
+    locales = [
+      "en_US.UTF-8/UTF-8"
+      "C.UTF-8/UTF-8"
+    ];
+  };
+
+
   postgresql_14_13 = prev.postgresql_14.overrideAttrs
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
@@ -36,7 +45,15 @@ final: prev: rec {
           moveToOutput "lib/libecpg*" "$out"
         '';
 
+      postFixup = final.lib.optionalString final.stdenv.hostPlatform.isGnu
+        ''
+          wrapProgram $out/bin/pg_dump --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+          wrapProgram $out/bin/pg_dumpall --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+          wrapProgram $out/bin/pg_restore --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+          wrapProgram $out/bin/psql --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+        '';
       outputs = [ "out" "lib" "dev" ];
+
     });
 
   postgresql_15_8 = prev.postgresql_15.overrideAttrs
@@ -76,7 +93,15 @@ final: prev: rec {
           moveToOutput "lib/libecpg*" "$out"
         '';
 
+      postFixup = final.lib.optionalString final.stdenv.hostPlatform.isGnu
+        ''
+          wrapProgram $out/bin/pg_dump --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+          wrapProgram $out/bin/pg_dumpall --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+          wrapProgram $out/bin/pg_restore --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+          wrapProgram $out/bin/psql --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+        '';
       outputs = [ "out" "lib" "dev" ];
+
     });
 
   postgresql_16_4 = prev.postgresql_16.overrideAttrs
@@ -117,6 +142,13 @@ final: prev: rec {
           moveToOutput "lib/libecpg*" "$out"
         '';
 
+      postFixup = final.lib.optionalString final.stdenv.hostPlatform.isGnu
+        ''
+          wrapProgram $out/bin/pg_dump --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+          wrapProgram $out/bin/pg_dumpall --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+          wrapProgram $out/bin/pg_restore --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+          wrapProgram $out/bin/psql --prefix LOCALE_ARCHIVE ${locales}/lib/locale/locale-archive
+        '';
       outputs = [ "out" "lib" "dev" ];
     });
 }
