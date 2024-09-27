@@ -10,35 +10,22 @@ final: prev: rec {
       };
     });
 
-  postgresql_14_13-client = postgresql_14_13.overrideAttrs
-    (finalAttrs: previousAttrs: {
-      buildInputs = with final.pkgs; [ zlib openssl ];
-      configureFlags = [
-        "--with-openssl"
-        "--without-readline"
-        "--sysconfdir=/etc"
-        "--libdir=$(lib)/lib"
-        "--with-system-tzdata=${final.pkgs.tzdata}/share/zoneinfo"
-      ];
+  postgresql_14_13-client = final.stdenv.mkDerivation {
+    pname = "postgresql-client";
+    version = postgresql_14_13.version;
 
-      separateDebugInfo = false;
-      buildFlags = [ ];
-      installTargets = [ "-C src/bin install" "-C ../interfaces install" ];
+    buildInputs = [ postgresql_14_13 ];
 
-      postInstall =
-        ''
-          cp src/bin/pg_dump/pg_dump $out/bin
-          cp src/bin/pg_dump/pg_restore $out/bin
-          cp src/bin/psql/psql $out/bin
-          moveToOutput "lib/pgxs" "$out" # looks strange, but not deleting it
-          moveToOutput "lib/libpgcommon*.a" "$out"
-          moveToOutput "lib/libpgport*.a" "$out"
-          moveToOutput "lib/libecpg*" "$out"
-        '';
+    phases = [ "installPhase" ];
 
-      postFixup = "";
-      outputs = [ "out" "lib" "dev" ];
-    });
+    installPhase = ''
+      mkdir -p $out/bin
+      cp ${postgresql_14_13}/bin/psql $out/bin/
+      cp ${postgresql_14_13}/bin/pg_dump $out/bin/
+      cp ${postgresql_14_13}/bin/pg_dumpall $out/bin/
+      cp ${postgresql_14_13}/bin/pg_restore $out/bin/
+    '';
+  };
 
   postgresql_15_8 = prev.postgresql_15.overrideAttrs
     (finalAttrs: previousAttrs: rec {
@@ -51,35 +38,22 @@ final: prev: rec {
       };
     });
 
-  postgresql_15_8-client = postgresql_15_8.overrideAttrs
-    (finalAttrs: previousAttrs: {
-      buildInputs = with final.pkgs; [ zlib openssl ];
-      configureFlags = [
-        "--with-openssl"
-        "--without-readline"
-        "--sysconfdir=/etc"
-        "--libdir=$(lib)/lib"
-        "--with-system-tzdata=${final.pkgs.tzdata}/share/zoneinfo"
-      ];
+  postgresql_15_8-client = final.stdenv.mkDerivation {
+    pname = "postgresql-client";
+    version = postgresql_15_8.version;
 
-      separateDebugInfo = false;
-      buildFlags = [ ];
-      installTargets = [ "-C src/bin install" "-C ../interfaces install" ];
+    buildInputs = [ postgresql_15_8 ];
 
-      postInstall =
-        ''
-          cp src/bin/pg_dump/pg_dump $out/bin
-          cp src/bin/pg_dump/pg_restore $out/bin
-          cp src/bin/psql/psql $out/bin
-          moveToOutput "lib/pgxs" "$out" # looks strange, but not deleting it
-          moveToOutput "lib/libpgcommon*.a" "$out"
-          moveToOutput "lib/libpgport*.a" "$out"
-          moveToOutput "lib/libecpg*" "$out"
-        '';
+    phases = [ "installPhase" ];
 
-      postFixup = "";
-      outputs = [ "out" "lib" "dev" ];
-    });
+    installPhase = ''
+      mkdir -p $out/bin
+      cp ${postgresql_15_8}/bin/psql $out/bin/
+      cp ${postgresql_15_8}/bin/pg_dump $out/bin/
+      cp ${postgresql_15_8}/bin/pg_dumpall $out/bin/
+      cp ${postgresql_15_8}/bin/pg_restore $out/bin/
+    '';
+  };
 
   postgresql_16_4 = prev.postgresql_16.overrideAttrs
     (finalAttrs: previousAttrs: rec {
@@ -92,34 +66,20 @@ final: prev: rec {
       };
     });
 
-  postgresql_16_4-client = postgresql_16_4.overrideAttrs
-    (finalAttrs: previousAttrs: {
-      buildInputs = with final.pkgs; [ zlib openssl icu ];
-      configureFlags = [
-        "--with-openssl"
-        "--without-readline"
-        "--sysconfdir=/etc"
-        "--libdir=$(lib)/lib"
-        "--with-system-tzdata=${final.pkgs.tzdata}/share/zoneinfo"
-      ] ++ final.lib.optionals final.stdenv.isDarwin [ "LDFLAGS_EX_BE=-Wl,-export_dynamic" ];
+  postgresql_16_4-client = final.stdenv.mkDerivation {
+    pname = "postgresql-client";
+    version = postgresql_16_4.version;
 
-      separateDebugInfo = false;
-      buildFlags = [ ];
-      installTargets = [ "-C src/bin install" "-C ../interfaces install" ];
+    buildInputs = [ postgresql_16_4 ];
 
-      postInstall =
-        ''
-          cp src/bin/pg_dump/pg_dump $out/bin
-          cp src/bin/pg_dump/pg_dumpall $out/bin
-          cp src/bin/pg_dump/pg_restore $out/bin
-          cp src/bin/psql/psql $out/bin
-          moveToOutput "lib/pgxs" "$out" # looks strange, but not deleting it
-          moveToOutput "lib/libpgcommon*.a" "$out"
-          moveToOutput "lib/libpgport*.a" "$out"
-          moveToOutput "lib/libecpg*" "$out"
-        '';
+    phases = [ "installPhase" ];
 
-      postFixup = ""; # this may need fixing to add locales
-      outputs = [ "out" "lib" "dev" ];
-    });
+    installPhase = ''
+      mkdir -p $out/bin
+      cp ${postgresql_16_4}/bin/psql $out/bin/
+      cp ${postgresql_16_4}/bin/pg_dump $out/bin/
+      cp ${postgresql_16_4}/bin/pg_dumpall $out/bin/
+      cp ${postgresql_16_4}/bin/pg_restore $out/bin/
+    '';
+  };
 }
