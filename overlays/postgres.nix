@@ -36,8 +36,7 @@ final: prev: rec {
           moveToOutput "lib/libecpg*" "$out"
         '';
 
-      postFixup = "";
-      outputs = [ "out" "lib" ];
+      outputs = [ "out" "lib" "dev" ];
     });
 
   postgresql_15_8 = prev.postgresql_15.overrideAttrs
@@ -77,8 +76,7 @@ final: prev: rec {
           moveToOutput "lib/libecpg*" "$out"
         '';
 
-      postFixup = "";
-      outputs = [ "out" "lib" ];
+      outputs = [ "out" "lib" "dev" ];
     });
 
   postgresql_16_4 = prev.postgresql_16.overrideAttrs
@@ -119,7 +117,6 @@ final: prev: rec {
           moveToOutput "lib/libecpg*" "$out"
         '';
 
-      postFixup = "";
-      outputs = [ "out" "lib" ];
+      outputs = [ "out" "lib" "dev" ];
     });
 }
