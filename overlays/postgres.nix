@@ -36,8 +36,8 @@ final: prev: rec {
           moveToOutput "lib/libecpg*" "$out"
         '';
 
-      # postFixup = "";
-      # outputs = [ "out" "lib" "dev" ];
+      postFixup = "";
+      outputs = [ "out" "lib" "dev" ];
     });
 
   postgresql_15_8 = prev.postgresql_15.overrideAttrs
@@ -77,8 +77,8 @@ final: prev: rec {
           moveToOutput "lib/libecpg*" "$out"
         '';
 
-      # postFixup = "";
-      # outputs = [ "out" "lib" "dev" ];
+      postFixup = "";
+      outputs = [ "out" "lib" "dev" ];
     });
 
   postgresql_16_4 = prev.postgresql_16.overrideAttrs
@@ -101,7 +101,7 @@ final: prev: rec {
         "--sysconfdir=/etc"
         "--libdir=$(lib)/lib"
         "--with-system-tzdata=${final.pkgs.tzdata}/share/zoneinfo"
-      ];
+      ] ++ final.lib.optionals final.stdenv.isDarwin [ "LDFLAGS_EX_BE=-Wl,-export_dynamic" ];
 
       separateDebugInfo = false;
       buildFlags = [ ];
@@ -119,7 +119,7 @@ final: prev: rec {
           moveToOutput "lib/libecpg*" "$out"
         '';
 
-      # postFixup = ""; # this may need fixing to add locales
-      # outputs = [ "out" "lib" "dev" ];
+      postFixup = ""; # this may need fixing to add locales
+      outputs = [ "out" "lib" "dev" ];
     });
 }
