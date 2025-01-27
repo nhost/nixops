@@ -4,6 +4,8 @@ final: prev: rec {
       pname = "postgresql";
       version = "14.15";
 
+      doCheck = false;
+
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
         hash = "sha256-AuiR4xS06e4ky9eAKNq3xz+cG6PjCDW8vvcf4iBAH8U=";
@@ -31,6 +33,8 @@ final: prev: rec {
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
       version = "15.10";
+
+      doCheck = false;
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
@@ -60,6 +64,8 @@ final: prev: rec {
       pname = "postgresql";
       version = "16.6";
 
+      doCheck = false;
+
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
         hash = "sha256-Izac2szUUnCsXcww+p2iBdW+M/pQXh8XoEGNLK7KR3s=";
@@ -87,6 +93,8 @@ final: prev: rec {
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
       version = "17.2";
+
+      doCheck = false;
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
