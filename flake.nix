@@ -52,10 +52,10 @@
               postgresql_15_10-client
               postgresql_16_6-client
               postgresql_17_2-client
-              # postgresql_14_15
-              # postgresql_15_10
-              # postgresql_16_6
-              # postgresql_17_2
+              postgresql_14_15
+              postgresql_15_10
+              postgresql_16_6
+              postgresql_17_2
             ];
           };
         };
