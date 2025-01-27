@@ -1,7 +1,7 @@
 {
   description = "Nhost's nix operations";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs?rev=d29975d32b1dc7fe91d5cb275d20f8f8aba399ad";
     flake-utils.url = "github:numtide/flake-utils";
     nix-filter.url = "github:numtide/nix-filter";
   };
