@@ -104,10 +104,10 @@ final: prev: rec {
 
     installPhase = ''
       mkdir -p $out/bin
-      cp ${postgresql_16_6}/bin/psql $out/bin/
-      cp ${postgresql_16_6}/bin/pg_dump $out/bin/
-      cp ${postgresql_16_6}/bin/pg_dumpall $out/bin/
-      cp ${postgresql_16_6}/bin/pg_restore $out/bin/
+      cp ${postgresql_17_2}/bin/psql $out/bin/
+      cp ${postgresql_17_2}/bin/pg_dump $out/bin/
+      cp ${postgresql_17_2}/bin/pg_dumpall $out/bin/
+      cp ${postgresql_17_2}/bin/pg_restore $out/bin/
     '';
   };
 }

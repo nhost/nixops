@@ -1,11 +1,11 @@
 final: prev: rec {
   go = prev.go_1_23.overrideAttrs
     (finalAttrs: previousAttrs: rec {
-      version = "1.23.1";
+      version = "1.23.5";
 
       src = final.fetchurl {
         url = "https://go.dev/dl/go${version}.src.tar.gz";
-        sha256 = "sha256-buROKYN50Ual5aprHFtdX10KM2XqvdcHQebiE0DsOw0=";
+        sha256 = "sha256-pvP0u9PmvdYm95tmjyEvu1ZJ2vdQhPt5tnigrk2XQjs=";
       };
 
     });
@@ -14,15 +14,15 @@ final: prev: rec {
 
   golangci-lint = prev.golangci-lint.override {
     buildGoModule = args: final.buildGoModule (args // rec {
-      version = "1.61.0";
+      version = "1.63.4";
       src = prev.fetchFromGitHub {
         owner = "golangci";
         repo = "golangci-lint";
         rev = "v${version}";
-        sha256 = "sha256-2YzVNOdasal27R92l6eVdeS81mAp0ZU6kYsC/Jfvkcg=";
+        sha256 = "sha256-7nIo6Nuz8KLuQlT7btjnTRFpOl+KVd30v973HRKzh08=";
       };
 
-      vendorHash = "sha256-mFDCRxbLq08yRd0ko3CCPJD2BZiCB0Gwd1g+/1oR6w8=";
+      vendorHash = "sha256-atr4HMxoPEfGeaNlHqwTEAcvgbSyzgCe262VUg3J86c=";
 
       ldflags = [
         "-s"
@@ -34,29 +34,16 @@ final: prev: rec {
     });
   };
 
-  mockgen = prev.mockgen.override {
-    buildGoModule = args: final.buildGoModule (args // rec {
-      version = "0.4.0";
-      src = final.fetchFromGitHub {
-        owner = "uber-go";
-        repo = "mock";
-        rev = "v${version}";
-        sha256 = "sha256-3nt70xrZisK5vgQa+STZPiY4F9ITKw8PbBWcKoBn4Vc=";
-      };
-      vendorHash = "sha256-mcNVud2jzvlPPQEaar/eYZkP71V2Civz+R5v10+tewA=";
-    });
-  };
-
   golines = final.buildGoModule {
     name = "golines";
-    version = "0.11.0";
+    version = "0.13.0-beta";
     src = final.fetchFromGitHub {
-      owner = "dbarrosop";
+      owner = "segmentio";
       repo = "golines";
-      rev = "77e7859691753d986722a03f28c048306390801b";
-      sha256 = "sha256-6w8K6JGumUeZUFZS4+SIPh2OizTjSQgHYfsjZRr31lg=";
+      rev = "fc305205784a70b4cfc17397654f4c94e3153ce4";
+      sha256 = "sha256-ZdCR4ZC1+Llyt/rcX0RGisM98u6rq9/ECUuHEMV+Kkc=";
     };
-    vendorHash = "sha256-jI3/m1UdZMKrS3H9jPhcVAUCjc1G/ejzHi9SCTy24ak=";
+    vendorHash = "sha256-mmdaHm3YL/2eB/r3Sskd9liljKAe3/c8T0z5KIUHeK0=";
 
     meta = with final.lib; {
       description = "A golang formatter that fixes long lines";
@@ -68,14 +55,14 @@ final: prev: rec {
 
   govulncheck = final.buildGoModule rec {
     name = "govulncheck";
-    version = "v1.1.3";
+    version = "v1.1.4";
     src = final.fetchFromGitHub {
       owner = "golang";
       repo = "vuln";
       rev = "${version}";
-      sha256 = "sha256-ydJ8AeoCnLls6dXxjI05+THEqPPdJqtAsKTriTIK9Uc=";
+      sha256 = "sha256-d1JWh/K+65p0TP5vAQbSyoatjN4L5nm3VEA+qBSrkAA=";
     };
-    vendorHash = "sha256-jESQV4Na4Hooxxd0RL96GHkA7Exddco5izjnhfH6xTg=";
+    vendorHash = "sha256-MSTKDeWVxD2Fa6fNoku4EwFwC90XZ5acnM67crcgXDg=";
 
     doCheck = false;
 
@@ -89,16 +76,16 @@ final: prev: rec {
 
   gqlgen = final.buildGoModule rec {
     pname = "gqlgen";
-    version = "0.17.54";
+    version = "0.17.63";
 
     src = final.fetchFromGitHub {
       owner = "99designs";
       repo = pname;
       rev = "v${version}";
-      sha256 = "sha256-0aoEVvKsdWJd3+aC7NuC6gs81dRRByy2TVrV4l9MdWE=";
+      sha256 = "sha256-J9+pleHdbQMHP/Aq9Pl6ise6PDvRqxQ72Iq7SNxgMws=";
     };
 
-    vendorHash = "sha256-wsuep7K5SlkTWCiOuzjrkODZgAsHDa9wO8nnwWQVYco=";
+    vendorHash = "sha256-hPUWYOfCx+kW2dJsjkCE/7bwofnGdQbDTvfZ877/pCk=";
 
     doCheck = false;
 
@@ -114,16 +101,16 @@ final: prev: rec {
 
   gqlgenc = final.buildGoModule rec {
     pname = "gqlgenc";
-    version = "0.25.2";
+    version = "0.30.2";
 
     src = final.fetchFromGitHub {
       owner = "Yamashou";
       repo = pname;
       rev = "v${version}";
-      sha256 = "sha256-g+l493Nt0SuW4gwJh0s9Zeejpyx2oLxVDykIvBup638=";
+      sha256 = "sha256-F6EuOqB9ccat9pytJn8glBn5X9eEsEUN2+8+FqVvEbY=";
     };
 
-    vendorHash = "sha256-YGFMQrxghJIgmiwEPfEqaACH7OETVkD8O7oUhm9foJo=";
+    vendorHash = "sha256-h3ePmfRkGqVXdtjX2cU5y2HnX+VkmTWNwrEkhLAmrlU=";
 
     doCheck = false;
 
@@ -139,15 +126,14 @@ final: prev: rec {
 
   oapi-codegen = prev.oapi-codegen.override {
     buildGoModule = args: final.buildGoModule (args // rec {
-      version = "2.4.0";
+      version = "2.4.1";
       src = final.fetchFromGitHub {
         owner = "oapi-codegen";
         repo = "oapi-codegen";
         rev = "v${version}";
-        sha256 = "sha256-Byb4bTtdn2Xi5hZXsAtcXA868VGQO6RORj1M2x8EAzg=";
+        hash = "sha256-21VhHSyfF+NHkXlr2svjwBNZmfS1O448POBP9XUQxak=";
       };
 
-      subPackages = [ "cmd/oapi-codegen" ];
       vendorHash = "sha256-bp5sFZNJFQonwfF1RjCnOMKZQkofHuqG0bXdG5Hf3jU=";
     });
   };
