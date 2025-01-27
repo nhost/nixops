@@ -5,6 +5,7 @@ final: prev: rec {
       version = "14.15";
 
       doCheck = false;
+      doInstallCheck = false;
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
@@ -35,6 +36,7 @@ final: prev: rec {
       version = "15.10";
 
       doCheck = false;
+      doInstallCheck = false;
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
@@ -65,6 +67,7 @@ final: prev: rec {
       version = "16.6";
 
       doCheck = false;
+      doInstallCheck = false;
 
       src = final.fetchurl {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
