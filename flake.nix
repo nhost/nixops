@@ -1,7 +1,7 @@
 {
   description = "Nhost's nix operations";
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs?rev=d29975d32b1dc7fe91d5cb275d20f8f8aba399ad";
     flake-utils.url = "github:numtide/flake-utils";
     nix-filter.url = "github:numtide/nix-filter";
   };
@@ -48,14 +48,14 @@
               gqlgenc
               oapi-codegen
               nhost-cli
-              # postgresql_14_15-client
-              # postgresql_15_10-client
-              # postgresql_16_6-client
+              postgresql_14_15-client
+              postgresql_15_10-client
+              postgresql_16_6-client
               postgresql_17_2-client
-              # postgresql_14_15
-              # postgresql_15_10
-              # postgresql_16_6
-              # postgresql_17_2
+              postgresql_14_15
+              postgresql_15_10
+              postgresql_16_6
+              postgresql_17_2
             ];
           };
         };
