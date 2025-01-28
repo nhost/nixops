@@ -90,7 +90,6 @@ in
     , ldflags
     , buildInputs
     , nativeBuildInputs
-    , cgoEnabled ? 1
     , postInstall ? ""
     }: (pkgs.buildGoModule {
       inherit src version ldflags buildInputs nativeBuildInputs;
@@ -102,8 +101,6 @@ in
       doCheck = false;
 
       subPackages = [ submodule ];
-
-      CGO_ENABLED = cgoEnabled;
 
       postInstall = postInstall;
 
