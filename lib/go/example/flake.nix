@@ -61,23 +61,19 @@
 
           example-arm64-darwin = (nixops-lib.go.package {
             inherit name src version ldflags buildInputs nativeBuildInputs;
-            cgoEnabled = 0;
-          }).overrideAttrs (old: old // { GOOS = "darwin"; GOARCH = "arm64"; });
+          }).overrideAttrs (old: old // { GOOS = "darwin"; GOARCH = "arm64"; CGO_ENABLED = "0"; });
 
           example-amd64-darwin = (nixops-lib.go.package {
             inherit name src version ldflags buildInputs nativeBuildInputs;
-            cgoEnabled = 0;
-          }).overrideAttrs (old: old // { GOOS = "darwin"; GOARCH = "amd64"; });
+          }).overrideAttrs (old: old // { GOOS = "darwin"; GOARCH = "amd64"; GO_ENABLED = "0"; });
 
           example-arm64-linux = (nixops-lib.go.package {
             inherit name src version ldflags buildInputs nativeBuildInputs;
-            cgoEnabled = 0;
-          }).overrideAttrs (old: old // { GOOS = "linux"; GOARCH = "arm64"; });
+          }).overrideAttrs (old: old // { GOOS = "linux"; GOARCH = "arm64"; CGO_ENABLED = "0"; });
 
           example-amd64-linux = (nixops-lib.go.package {
             inherit name src version ldflags buildInputs nativeBuildInputs;
-            cgoEnabled = 0;
-          }).overrideAttrs (old: old // { GOOS = "linux"; GOARCH = "amd64"; });
+          }).overrideAttrs (old: old // { GOOS = "linux"; GOARCH = "amd64"; CGO_ENABLED = "0"; });
 
           docker-image = nixops-lib.go.docker-image {
             inherit name version buildInputs;
