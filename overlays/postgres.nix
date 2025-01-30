@@ -1,34 +1,10 @@
-final: prev:
-let
-  replaceBuildInput =
-    { buildInputs
-    , oldPackage
-    , newPackage
-    }: builtins.filter
-      (x: x.name or "" != oldPackage)
-      buildInputs
-    ++ [ newPackage ];
-in
-rec {
-  curl = prev.curl.overrideAttrs
-    (finalAttrs: previousAttrs: {
-      propagatedBuildInputs = replaceBuildInput {
-        buildInputs = previousAttrs.propagatedBuildInputs;
-        oldPackage = "openssl";
-        newPackage = final.openssl_patched;
-      };
-    });
-
+final: prev: rec {
   postgresql_14_15 = prev.postgresql_14.overrideAttrs
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
       version = "14.15";
 
-      buildInputs = replaceBuildInput {
-        buildInputs = previousAttrs.buildInputs;
-        oldPackage = "openssl";
-        newPackage = final.openssl_patched;
-      };
+      withSystemdSupport = false;
 
       doCheck = false;
       doInstallCheck = false;
@@ -60,12 +36,6 @@ rec {
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
       version = "15.10";
-
-      buildInputs = replaceBuildInput {
-        buildInputs = previousAttrs.buildInputs;
-        oldPackage = "openssl";
-        newPackage = final.openssl_patched;
-      };
 
       withSystemdSupport = false;
 
@@ -100,12 +70,6 @@ rec {
       pname = "postgresql";
       version = "16.6";
 
-      buildInputs = replaceBuildInput {
-        buildInputs = previousAttrs.buildInputs;
-        oldPackage = "openssl";
-        newPackage = final.openssl_patched;
-      };
-
       withSystemdSupport = false;
 
       doCheck = false;
@@ -138,12 +102,6 @@ rec {
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
       version = "17.2";
-
-      buildInputs = replaceBuildInput {
-        buildInputs = previousAttrs.buildInputs;
-        oldPackage = "openssl";
-        newPackage = final.openssl_patched;
-      };
 
       withSystemdSupport = false;
       doCheck = false;
