@@ -1,19 +1,13 @@
 final: prev:
 let
-  buildInputs =
-    [
-      final.zlib
-      final.readline
-      final.openssl_patched
-      (final.libxml2.override { enableHttp = true; })
-      final.icu
-      final.libuuid
-      final.lz4
-      final.zstd
-      final.systemdSupport
-    ]
-    ++ final.lib.optionals (with final.stdenv.hostPlatform; !isWindows && !isStatic) [ final.libkrb5 ]
-    ++ final.lib.optionals final.stdenv.hostPlatform.isLinux [ final.linux-pam ];
+  replaceBuildInput =
+    { buildInputs
+    , oldPackage
+    , newPackage
+    }: builtins.filter
+      (x: x.name or "" != oldPackage)
+      buildInputs
+    ++ [ newPackage ];
 in
 rec {
   postgresql_14_15 = prev.postgresql_14.overrideAttrs
@@ -21,7 +15,11 @@ rec {
       pname = "postgresql";
       version = "14.15";
 
-      inherit buildInputs;
+      buildInputs = replaceBuildInput {
+        buildInputs = previousAttrs.buildInputs;
+        oldPackage = "openssl";
+        newPackage = final.openssl_patched;
+      };
 
       doCheck = false;
       doInstallCheck = false;
@@ -54,7 +52,13 @@ rec {
       pname = "postgresql";
       version = "15.10";
 
-      inherit buildInputs;
+      buildInputs = replaceBuildInput {
+        buildInputs = previousAttrs.buildInputs;
+        oldPackage = "openssl";
+        newPackage = final.openssl_patched;
+      };
+
+      withSystemdSupport = false;
 
       doCheck = false;
       doInstallCheck = false;
@@ -87,7 +91,13 @@ rec {
       pname = "postgresql";
       version = "16.6";
 
-      inherit buildInputs;
+      buildInputs = replaceBuildInput {
+        buildInputs = previousAttrs.buildInputs;
+        oldPackage = "openssl";
+        newPackage = final.openssl_patched;
+      };
+
+      withSystemdSupport = false;
 
       doCheck = false;
       doInstallCheck = false;
@@ -120,6 +130,13 @@ rec {
       pname = "postgresql";
       version = "17.2";
 
+      buildInputs = replaceBuildInput {
+        buildInputs = previousAttrs.buildInputs;
+        oldPackage = "openssl";
+        newPackage = final.openssl_patched;
+      };
+
+      withSystemdSupport = false;
       doCheck = false;
 
       src = final.fetchurl {
