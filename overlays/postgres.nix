@@ -10,9 +10,8 @@ let
       final.libuuid
       final.lz4
       final.zstd
+      final.systemdSupport
     ]
-    # ++ lib.optionals systemdSupport [ systemdLibs ]
-    # ++ lib.optionals pythonSupport [ python3 ]
     ++ final.lib.optionals (with final.stdenv.hostPlatform; !isWindows && !isStatic) [ final.libkrb5 ]
     ++ final.lib.optionals final.stdenv.hostPlatform.isLinux [ final.linux-pam ];
 in
