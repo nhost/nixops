@@ -1,8 +1,28 @@
-final: prev: rec {
+final: prev:
+let
+  buildInputs =
+    [
+      final.zlib
+      final.readline
+      final.openssl_patched
+      (final.libxml2.override { enableHttp = true; })
+      final.icu
+      final.libuuid
+      final.lz4
+      final.zstd
+    ]
+    # ++ lib.optionals systemdSupport [ systemdLibs ]
+    # ++ lib.optionals pythonSupport [ python3 ]
+    ++ final.lib.optionals (with final.stdenv.hostPlatform; !isWindows && !isStatic) [ final.libkrb5 ]
+    ++ final.lib.optionals final.stdenv.hostPlatform.isLinux [ final.linux-pam ];
+in
+rec {
   postgresql_14_15 = prev.postgresql_14.overrideAttrs
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
       version = "14.15";
+
+      inherit buildInputs;
 
       doCheck = false;
       doInstallCheck = false;
@@ -35,6 +55,8 @@ final: prev: rec {
       pname = "postgresql";
       version = "15.10";
 
+      inherit buildInputs;
+
       doCheck = false;
       doInstallCheck = false;
 
@@ -65,6 +87,8 @@ final: prev: rec {
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
       version = "16.6";
+
+      inherit buildInputs;
 
       doCheck = false;
       doInstallCheck = false;

@@ -1,7 +1,7 @@
 final: prev:
 {
 
-  openssl = prev.callPackage ./openssl/default.nix {
+  openssl_patched = prev.callPackage ./openssl/default.nix {
     inherit (final) lib stdenv;
     inherit (final) fetchurl buildPackages perl coreutils;
     inherit (final) writeShellScript makeBinaryWrapper removeReferencesTo testers;
