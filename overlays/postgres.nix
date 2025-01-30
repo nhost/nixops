@@ -10,6 +10,15 @@ let
     ++ [ newPackage ];
 in
 rec {
+  curl = prev.curl.overrideAttrs
+    (finalAttrs: previousAttrs: {
+      propagatedBuildInputs = replaceBuildInput {
+        buildInputs = previousAttrs.propagatedBuildInputs;
+        oldPackage = "openssl";
+        newPackage = final.openssl_patched;
+      };
+    });
+
   postgresql_14_15 = prev.postgresql_14.overrideAttrs
     (finalAttrs: previousAttrs: rec {
       pname = "postgresql";
