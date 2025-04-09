@@ -63,7 +63,7 @@ in
         golines -l --base-formatter=gofumpt . | diff - /dev/null
 
         echo "➜ Checking for vulnerabilities"
-        govulncheck ./${submodule}/...
+        govulncheck -scan=package ./...
 
         echo "➜ Running golangci-lint"
         golangci-lint run \
