@@ -1,11 +1,11 @@
 final: prev: rec {
-  go = prev.go_1_23.overrideAttrs
+  go = prev.go_1_24.overrideAttrs
     (finalAttrs: previousAttrs: rec {
-      version = "1.23.8";
+      version = "1.24.2";
 
       src = final.fetchurl {
         url = "https://go.dev/dl/go${version}.src.tar.gz";
-        sha256 = "sha256-DKHx436iVePOKDrz9OYoUC+0RFh9qYelu5bWxvFZMNQ=";
+        sha256 = "sha256-ncd/+twW2DehvzLZnGJMtN8GR87nsRnt2eexvMBfLgA=";
       };
 
     });
@@ -13,16 +13,16 @@ final: prev: rec {
   buildGoModule = prev.buildGoModule.override { go = go; };
 
   golangci-lint = prev.golangci-lint.override {
-    buildGoModule = args: final.buildGoModule (args // rec {
-      version = "1.63.4";
+    buildGo124Module = args: final.buildGo124Module (args // rec {
+      version = "2.1.5";
       src = prev.fetchFromGitHub {
         owner = "golangci";
         repo = "golangci-lint";
         rev = "v${version}";
-        sha256 = "sha256-7nIo6Nuz8KLuQlT7btjnTRFpOl+KVd30v973HRKzh08=";
+        sha256 = "sha256-wCBGtKlaKW6Btim9xe0K8IzdNVcBDEidhr6LCwLUx98=";
       };
 
-      vendorHash = "sha256-atr4HMxoPEfGeaNlHqwTEAcvgbSyzgCe262VUg3J86c=";
+      vendorHash = "sha256-Dd4GTjkq1LTH7G1Qj8y+q0LW/8cQECN8o+3xHFtmpwI=";
 
       ldflags = [
         "-s"
@@ -76,16 +76,16 @@ final: prev: rec {
 
   gqlgen = final.buildGoModule rec {
     pname = "gqlgen";
-    version = "0.17.63";
+    version = "0.17.72";
 
     src = final.fetchFromGitHub {
       owner = "99designs";
       repo = pname;
       rev = "v${version}";
-      sha256 = "sha256-J9+pleHdbQMHP/Aq9Pl6ise6PDvRqxQ72Iq7SNxgMws=";
+      sha256 = "sha256-7jnUzU+6kHu9uU2dbxqV9FzDIrw1tTP03ecbQHcHoak=";
     };
 
-    vendorHash = "sha256-hPUWYOfCx+kW2dJsjkCE/7bwofnGdQbDTvfZ877/pCk=";
+    vendorHash = "sha256-Q9voEyziSlq9Ele4fz/obQS4ufapa4zK3cTd493XJgU=";
 
     doCheck = false;
 
@@ -101,16 +101,16 @@ final: prev: rec {
 
   gqlgenc = final.buildGoModule rec {
     pname = "gqlgenc";
-    version = "0.30.2";
+    version = "0.32.0";
 
     src = final.fetchFromGitHub {
       owner = "Yamashou";
       repo = pname;
       rev = "v${version}";
-      sha256 = "sha256-F6EuOqB9ccat9pytJn8glBn5X9eEsEUN2+8+FqVvEbY=";
+      sha256 = "sha256-3Qz1o91IPKjhzIYzKcdl456AWn6nsrcQ04VglBlpe54=";
     };
 
-    vendorHash = "sha256-h3ePmfRkGqVXdtjX2cU5y2HnX+VkmTWNwrEkhLAmrlU=";
+    vendorHash = "sha256-Ax5MA4wqQdXSDEIkiG5TcvFIN6YtyXuiJOdQGPYIb+Y=";
 
     doCheck = false;
 
