@@ -40,6 +40,13 @@
         devShells = flake-utils.lib.flattenTree {
           default = pkgs.mkShell {
             buildInputs = with pkgs; [
+              gh
+              gnused
+            ];
+          };
+
+          ci = pkgs.mkShell {
+            buildInputs = with pkgs; [
               go
               golangci-lint
               mockgen

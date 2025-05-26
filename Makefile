@@ -22,11 +22,11 @@ endif
 build:  ## Build application and places the binary under ./result/bin
 	nix build $(build-options) \
 		--print-build-logs \
-		.\#devShells.$(ARCH)-$(OS).default
+		.\#devShells.$(ARCH)-$(OS).ci
 
 
 .PHONY: build-dry-run
 build-dry-run:  ## Run nix flake check
 	@nix path-info \
 		--derivation \
-		.\#devShells.$(ARCH)-$(OS).default
+		.\#devShells.$(ARCH)-$(OS).ci
