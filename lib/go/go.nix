@@ -91,7 +91,7 @@ in
     , buildInputs
     , nativeBuildInputs
     , postInstall ? ""
-    }: (pkgs.buildGoModule {
+    }: (pkgs.buildGoModule.override { go = pkgs.go; } {
       inherit src version ldflags buildInputs nativeBuildInputs;
 
       pname = name;

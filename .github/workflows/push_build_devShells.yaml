@@ -10,7 +10,7 @@ jobs:
   artifacts:
     strategy:
       matrix:
-        os: [blacksmith-8vcpu-ubuntu-2204, blacksmith-8vcpu-ubuntu-2204-arm]
+        os: [blacksmith-16vcpu-ubuntu-2404, blacksmith-16vcpu-ubuntu-2404-arm]
       fail-fast: true
 
     runs-on: ${{ matrix.os }}
