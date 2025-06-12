@@ -6,11 +6,11 @@ let
     , created
     , fromImage ? null
     , copyToRoot ? null
-    , maxLayers
+    , maxLayers ? 100
     , config ? { }
     }:
     nix2containerPkgs.nix2container.buildImage {
-      inherit name tag created copyToRoot config;
+      inherit name tag created copyToRoot fromImage maxLayers config;
     };
 in
 {
