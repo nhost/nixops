@@ -75,26 +75,26 @@
 
           ci = pkgs.mkShell {
             buildInputs = with pkgs; [
-              # go
-              # golangci-lint
-              # mockgen
-              # golines
-              # govulncheck
-              # gqlgen
-              # gqlgenc
-              # oapi-codegen
-              # nhost-cli
+              go
+              golangci-lint
+              mockgen
+              golines
+              govulncheck
+              gqlgen
+              gqlgenc
+              oapi-codegen
+              nhost-cli
               skopeo
-              # postgresql_14_17-client
-              # postgresql_15_12-client
-              # postgresql_16_8-client
-              # postgresql_17_4-client
-              # postgresql_14_17
-              # postgresql_15_12
-              # postgresql_16_8
-              # postgresql_17_4
+              postgresql_14_17-client
+              postgresql_15_12-client
+              postgresql_16_8-client
+              postgresql_17_4-client
+              postgresql_14_17
+              postgresql_15_12
+              postgresql_16_8
+              postgresql_17_4
             ] ++ pkgs.lib.optionals (pkgs.stdenv.hostPlatform.isLinux) [
-              self.packages.${system}.dummyContainer
+              self.packages.${system}.dummy-container
             ];
           };
         };
