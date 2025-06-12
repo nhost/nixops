@@ -4,6 +4,7 @@ let
     { name
     , tag
     , created
+    , fromImage ? null
     , copyToRoot ? null
     , config ? { }
     }:
@@ -16,12 +17,13 @@ in
     { name
     , tag
     , created
+    , fromImage ? null
     , copyToRoot ? null
     , config ? { }
     }:
     pkgs.runCommand "image-as-dir" { } ''
       ${(dockerImageFn {
-        inherit name tag created copyToRoot config;
+        inherit name tag created fromImage copyToRoot config;
       }).copyTo}/bin/copy-to dir:$out
     '';
 }
