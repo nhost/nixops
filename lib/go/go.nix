@@ -16,6 +16,7 @@ let
     , created
     , package
     , buildInputs
+    , maxLayers
     , contents ? [ ]
     , config ? { }
     }:
@@ -175,12 +176,13 @@ in
     , created
     , package
     , buildInputs
+    , maxLayers ? 100
     , contents ? [ ]
     , config ? { }
     }:
     pkgs.runCommand "image-as-dir" { } ''
       ${(dockerImageFn {
-        inherit name version created package buildInputs contents config;
+        inherit name version created package buildInputs maxLayers contents config;
       }).copyTo}/bin/copy-to dir:$out
     '';
 }

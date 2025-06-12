@@ -6,6 +6,7 @@ let
     , created
     , fromImage ? null
     , copyToRoot ? null
+    , maxLayers
     , config ? { }
     }:
     nix2containerPkgs.nix2container.buildImage {
@@ -19,11 +20,12 @@ in
     , created
     , fromImage ? null
     , copyToRoot ? null
+    , maxLayers ? 100
     , config ? { }
     }:
     pkgs.runCommand "image-as-dir" { } ''
       ${(dockerImageFn {
-        inherit name tag created fromImage copyToRoot config;
+        inherit name tag created fromImage copyToRoot maxLayers config;
       }).copyTo}/bin/copy-to dir:$out
     '';
 }
