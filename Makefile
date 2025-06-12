@@ -25,6 +25,15 @@ build:  ## Build application and places the binary under ./result/bin
 		.\#devShells.$(ARCH)-$(OS).ci
 
 
+.PHONY: build-docker-image
+build-docker-image:  ## Build postgres image
+	nix build $(docker-build-options) \
+		--print-build-logs \
+		.\#packages.$(ARCH)-linux.dummy-container-as-dir
+	nix develop \#ci -c \
+		skopeo copy --insecure-policy dir:./result docker-daemon:dummy-container:latest
+
+
 .PHONY: build-dry-run
 build-dry-run:  ## Run nix flake check
 	@nix path-info \

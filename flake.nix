@@ -39,9 +39,9 @@
           nix-tests = nix-lib.check { src = nix-src; };
         };
 
-        packages = {
+        packages = rec {
           # we use this in the CI to prebuild the container build tools
-          dummyContainer = nix2containerPkgs.nix2container.buildImage {
+          dummy-container = nix2containerPkgs.nix2container.buildImage {
             name = "dummy-container";
             tag = "latest";
 
@@ -61,6 +61,8 @@
               ];
             };
           };
+
+          dummy-container-as-dir = pkgs.runCommand "image-as-dir" { } "${dummy-container.copyTo}/bin/copy-to dir:$out";
         };
 
         devShells = flake-utils.lib.flattenTree {
@@ -73,23 +75,24 @@
 
           ci = pkgs.mkShell {
             buildInputs = with pkgs; [
-              go
-              golangci-lint
-              mockgen
-              golines
-              govulncheck
-              gqlgen
-              gqlgenc
-              oapi-codegen
-              nhost-cli
-              postgresql_14_17-client
-              postgresql_15_12-client
-              postgresql_16_8-client
-              postgresql_17_4-client
-              postgresql_14_17
-              postgresql_15_12
-              postgresql_16_8
-              postgresql_17_4
+              # go
+              # golangci-lint
+              # mockgen
+              # golines
+              # govulncheck
+              # gqlgen
+              # gqlgenc
+              # oapi-codegen
+              # nhost-cli
+              skopeo
+              # postgresql_14_17-client
+              # postgresql_15_12-client
+              # postgresql_16_8-client
+              # postgresql_17_4-client
+              # postgresql_14_17
+              # postgresql_15_12
+              # postgresql_16_8
+              # postgresql_17_4
             ] ++ pkgs.lib.optionals (pkgs.stdenv.hostPlatform.isLinux) [
               self.packages.${system}.dummyContainer
             ];
