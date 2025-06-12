@@ -28,7 +28,7 @@ build:  ## Build application and places the binary under ./result/bin
 .PHONY: build-docker-image
 build-docker-image:  ## Build postgres image
 	cd lib/go/example && \
-		nix flake update && \
+		nix flake update nixops && \
 		nix develop -c make build-docker-image
 
 
