@@ -79,10 +79,10 @@
           #   inherit name src version ldflags buildInputs nativeBuildInputs;
           # }).overrideAttrs (old: old // { GOOS = "linux"; GOARCH = "amd64"; CGO_ENABLED = "0"; });
 
-          docker-image = nixops-lib.go.docker-image {
-            inherit name version created buildInputs;
+          docker-image = nixops-lib.generic.docker-image {
+            inherit name created;
+            tag = version;
 
-            package = example;
           };
 
           default = example;

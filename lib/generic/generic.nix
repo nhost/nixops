@@ -4,7 +4,7 @@ let
     { name
     , tag
     , created
-    , copyToRoot ? { }
+    , copyToRoot ? null
     , config ? { }
     }:
     nix2containerPkgs.nix2container.buildImage {
@@ -16,7 +16,7 @@ in
     { name
     , tag
     , created
-    , copyToRoot ? { }
+    , copyToRoot ? null
     , config ? { }
     }:
     pkgs.runCommand "image-as-dir" { } ''
