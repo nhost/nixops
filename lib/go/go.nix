@@ -67,7 +67,7 @@ in
 
         echo "➜ Running golangci-lint"
         golangci-lint run \
-          --timeout 300s \
+          --timeout 600s \
           ./${submodule}/...
 
         echo "➜ Running tests"
