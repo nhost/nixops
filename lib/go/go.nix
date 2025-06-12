@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, nix2containerPkgs }:
 let
   goCheckDeps = with pkgs; [
     go
@@ -9,6 +9,54 @@ let
     gofumpt
     govulncheck
   ];
+
+  dockerImageFn =
+    { name
+    , version
+    , package
+    , buildInputs
+    , contents ? [ ]
+    , config ? { }
+    }:
+    nix2containerPkgs.nix2container.buildImage {
+      inherit name;
+      tag = version;
+      # created = "now";
+
+      copyToRoot = pkgs.buildEnv {
+        name = "image";
+        paths = [
+          pkgs.cacert
+          package
+          (pkgs.writeTextFile {
+            name = "tmp-file";
+            text = ''
+              dummy file to generate tmpdir
+            '';
+            destination = "/tmp/tmp-file";
+          })
+          # busybox
+        ] ++ buildInputs ++ contents;
+        pathsToLink = [
+          "/bin"
+          "/etc"
+          "/lib"
+          "/run"
+          "/share"
+          "/tmp"
+          "/var"
+        ];
+      };
+
+      config = {
+        Env = [
+          "TMPDIR=/tmp"
+        ];
+        Entrypoint = [
+          "${package}/bin/${name}"
+        ];
+      } // config;
+    };
 in
 {
   devShell =
@@ -129,32 +177,10 @@ in
     , contents ? [ ]
     , config ? { }
     }:
-    pkgs.dockerTools.buildLayeredImage {
-      inherit name;
-      tag = version;
-      created = "now";
-
-      contents = with pkgs; [
-        cacert
-        package
-        (writeTextFile {
-          name = "tmp-file";
-          text = ''
-            dummy file to generate tmpdir
-          '';
-          destination = "/tmp/tmp-file";
-        })
-        # busybox
-      ] ++ buildInputs ++ contents;
-      config = {
-        Env = [
-          "TMPDIR=/tmp"
-        ];
-        Entrypoint = [
-          "${package}/bin/${name}"
-        ];
-      } // config;
-    };
-
+    pkgs.runCommand "image-as-dir" { } ''
+      ${(dockerImageFn {
+        inherit name version package buildInputs contents config;
+      }).copyTo}/bin/copy-to dir:$out
+    '';
 }
 

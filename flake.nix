@@ -30,6 +30,7 @@
         pkgs = import nixpkgs {
           inherit system overlays;
         };
+
         nix2containerPkgs = nix2container.packages.${system};
 
         nix-lib = import ./lib/nix/nix.nix { inherit pkgs; };
@@ -37,32 +38,6 @@
       {
         checks = {
           nix-tests = nix-lib.check { src = nix-src; };
-        };
-
-        packages = rec {
-          # we use this in the CI to prebuild the container build tools
-          dummy-container = nix2containerPkgs.nix2container.buildImage {
-            name = "dummy-container";
-            tag = "latest";
-
-            copyToRoot = pkgs.buildEnv {
-              name = "image";
-              paths = [
-                pkgs.cacert
-              ];
-              pathsToLink = [
-                "/bin"
-                "/etc"
-                "/lib"
-                "/run"
-                "/share"
-                "/tmp"
-                "/var"
-              ];
-            };
-          };
-
-          dummy-container-as-dir = pkgs.runCommand "image-as-dir" { } "${dummy-container.copyTo}/bin/copy-to dir:$out";
         };
 
         devShells = flake-utils.lib.flattenTree {
@@ -93,8 +68,6 @@
               postgresql_15_12
               postgresql_16_8
               postgresql_17_4
-            ] ++ pkgs.lib.optionals (pkgs.stdenv.hostPlatform.isLinux) [
-              self.packages.${system}.dummy-container
             ];
           };
         };
