@@ -28,7 +28,8 @@
 
         name = "example";
         description = "nixops example for go";
-        version = nixpkgs.lib.fileContents ./VERSION;
+        version = "0.0.0-dev";
+        created = "1970-01-01T00:00:00Z";
         module = "github.com/nhost/nixops/lib/go/example";
         tags = [ "integration" ];
         ldflags = [
@@ -79,7 +80,7 @@
           # }).overrideAttrs (old: old // { GOOS = "linux"; GOARCH = "amd64"; CGO_ENABLED = "0"; });
 
           docker-image = nixops-lib.go.docker-image {
-            inherit name version buildInputs;
+            inherit name version created buildInputs;
 
             package = example;
           };
@@ -90,4 +91,3 @@
       }
     );
 }
-

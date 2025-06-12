@@ -2,13 +2,16 @@ NAME:=$(shell basename $(CURDIR))
 ifdef VER
 VERSION=$(shell echo $(VER) | sed -e 's/^v//g' -e 's/\//_/g')
 else
-VERSION=$(shell cat VERSION)
+VERSION=$(shell grep -oP 'version\s*=\s*"\K[^"]+' flake.nix | head -n 1)
 endif
 
 ifeq ($(shell uname -m),x86_64)
   HOST_ARCH?=x86_64
   ARCH?=amd64
 else ifeq ($(shell uname -m),arm64)
+  HOST_ARCH?=aarch64
+  ARCH?=arm64
+else ifeq ($(shell uname -m),aarch64)
   HOST_ARCH?=aarch64
   ARCH?=arm64
 endif
@@ -41,7 +44,8 @@ help: ## Show this help.
 
 .PHONY: get-version
 get-version:  ## Return version
-	@echo $(VERSION) > VERSION
+	@sed -i '/^\s*version = ".*";/s//version = "${VERSION}";/' flake.nix
+	@sed -i '/^\s*created = ".*";/s//created = "${shell date --utc '+%Y-%m-%dT%H:%M:%SZ'}";/' flake.nix
 	@echo $(VERSION)
 
 

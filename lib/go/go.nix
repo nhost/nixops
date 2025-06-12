@@ -13,15 +13,15 @@ let
   dockerImageFn =
     { name
     , version
+    , created
     , package
     , buildInputs
     , contents ? [ ]
     , config ? { }
     }:
     nix2containerPkgs.nix2container.buildImage {
-      inherit name;
+      inherit name created;
       tag = version;
-      # created = "now";
 
       copyToRoot = pkgs.buildEnv {
         name = "image";
@@ -172,6 +172,7 @@ in
   docker-image =
     { name
     , version
+    , created
     , package
     , buildInputs
     , contents ? [ ]
@@ -179,7 +180,7 @@ in
     }:
     pkgs.runCommand "image-as-dir" { } ''
       ${(dockerImageFn {
-        inherit name version package buildInputs contents config;
+        inherit name version created package buildInputs contents config;
       }).copyTo}/bin/copy-to dir:$out
     '';
 }
