@@ -4,7 +4,7 @@ let
     { name
     , tag
     , created
-    , fromImage ? null
+    , fromImage ? ""
     , copyToRoot ? null
     , maxLayers ? 100
     , config ? { }
@@ -18,7 +18,7 @@ in
     { name
     , tag
     , created
-    , fromImage ? null
+    , fromImage ? ""
     , copyToRoot ? null
     , maxLayers ? 100
     , config ? { }
