@@ -21,7 +21,7 @@ let
     , config ? { }
     }:
     nix2containerPkgs.nix2container.buildImage {
-      inherit name created;
+      inherit name created maxLayers;
       tag = version;
 
       copyToRoot = pkgs.buildEnv {
