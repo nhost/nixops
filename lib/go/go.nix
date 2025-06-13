@@ -38,15 +38,6 @@ let
           })
           # busybox
         ] ++ buildInputs ++ contents;
-        pathsToLink = [
-          "/bin"
-          "/etc"
-          "/lib"
-          "/run"
-          "/share"
-          "/tmp"
-          "/var"
-        ];
       };
 
       config = {
