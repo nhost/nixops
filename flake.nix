@@ -1,13 +1,14 @@
 {
   description = "Nhost's nix operations";
   inputs = {
-    # nixpkgs.url = "github:NixOS/nixpkgs?rev=9e2f27689a02e0ec978b92c1c4f775a41108c28d";
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     flake-utils.url = "github:numtide/flake-utils";
     nix-filter.url = "github:numtide/nix-filter";
+    nix2container.url = "github:nlewo/nix2container";
+    nix2container.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, flake-utils, nix-filter }:
+  outputs = { self, nixpkgs, flake-utils, nix-filter, nix2container }:
     let
       nix-src = nix-filter.lib.filter {
         root = ./.;
@@ -30,6 +31,8 @@
           inherit system overlays;
         };
 
+        nix2containerPkgs = nix2container.packages.${system};
+
         nix-lib = import ./lib/nix/nix.nix { inherit pkgs; };
       in
       {
@@ -39,7 +42,7 @@
 
         devShells = flake-utils.lib.flattenTree {
           default = pkgs.mkShell {
-            buildInputs = with pkgs; [
+            buildInputs = with pkgs;[
               gh
               gnused
             ];
@@ -56,6 +59,7 @@
               gqlgenc
               oapi-codegen
               nhost-cli
+              skopeo
               postgresql_14_17-client
               postgresql_15_12-client
               postgresql_16_8-client

@@ -10,7 +10,7 @@ jobs:
   artifacts:
     strategy:
       matrix:
-        os: [blacksmith-8vcpu-ubuntu-2204, blacksmith-8vcpu-ubuntu-2204-arm]
+        os: [blacksmith-8vcpu-ubuntu-2404, blacksmith-8vcpu-ubuntu-2404-arm]
       fail-fast: true
 
     runs-on: ${{ matrix.os }}
@@ -36,7 +36,7 @@ jobs:
 
     - uses: cachix/install-nix-action@v27
       with:
-        install_url: "https://releases.nixos.org/nix/nix-2.22.3/install"
+        install_url: "https://releases.nixos.org/nix/nix-2.26.3/install"
         install_options: "--no-daemon"
         extra_nix_config: |
           experimental-features = nix-command flakes
@@ -58,6 +58,10 @@ jobs:
     - name: "Build"
       run: |
         make build
+
+    - name: "Build docker image"
+      run: |
+        make build-docker-image
 
     - name: "Cache build"
       run: |

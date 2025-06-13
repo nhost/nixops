@@ -25,6 +25,13 @@ build:  ## Build application and places the binary under ./result/bin
 		.\#devShells.$(ARCH)-$(OS).ci
 
 
+.PHONY: build-docker-image
+build-docker-image:  ## Build postgres image
+	cd lib/go/example && \
+		nix flake update nixops && \
+		nix develop -c make build-docker-image
+
+
 .PHONY: build-dry-run
 build-dry-run:  ## Run nix flake check
 	@nix path-info \

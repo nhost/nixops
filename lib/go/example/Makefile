@@ -1,13 +1,17 @@
+NAME:=$(shell basename $(CURDIR))
 ifdef VER
 VERSION=$(shell echo $(VER) | sed -e 's/^v//g' -e 's/\//_/g')
 else
-VERSION=$(shell cat VERSION)
+VERSION=$(shell grep -oP 'version\s*=\s*"\K[^"]+' flake.nix | head -n 1)
 endif
 
 ifeq ($(shell uname -m),x86_64)
   HOST_ARCH?=x86_64
   ARCH?=amd64
 else ifeq ($(shell uname -m),arm64)
+  HOST_ARCH?=aarch64
+  ARCH?=arm64
+else ifeq ($(shell uname -m),aarch64)
   HOST_ARCH?=aarch64
   ARCH?=arm64
 endif
@@ -40,7 +44,8 @@ help: ## Show this help.
 
 .PHONY: get-version
 get-version:  ## Return version
-	@echo $(VERSION) > VERSION
+	@sed -i '/^\s*version = ".*";/s//version = "${VERSION}";/' flake.nix
+	@sed -i '/^\s*created = ".*";/s//created = "${shell date --utc '+%Y-%m-%dT%H:%M:%SZ'}";/' flake.nix
 	@echo $(VERSION)
 
 
@@ -53,12 +58,12 @@ check:   ## Run nix flake check
 build:  ## Build application and places the binary under ./result/bin
 	nix build \
 		--print-build-logs \
-		.\#example-$(ARCH)-$(OS)
+		.\#example-$(HOST_ARCH)-$(OS)
 
 
 .PHONY: build-docker-image
 build-docker-image:  ## Build docker container for native architecture
 	nix build $(docker-build-options) \
-		.\#packages.$(ARCH)-linux.docker-image \
+		.\#packages.$(HOST_ARCH)-linux.docker-image \
 		--print-build-logs
-	docker load < result
+	skopeo copy --insecure-policy dir:./result docker-daemon:$(NAME):$(VERSION)

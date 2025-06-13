@@ -1,4 +1,4 @@
-{ pkgs }:
+{ pkgs, nix2containerPkgs }:
 let
   goCheckDeps = with pkgs; [
     go
@@ -9,6 +9,46 @@ let
     gofumpt
     govulncheck
   ];
+
+  dockerImageFn =
+    { name
+    , version
+    , created
+    , package
+    , buildInputs
+    , maxLayers
+    , contents ? [ ]
+    , config ? { }
+    }:
+    nix2containerPkgs.nix2container.buildImage {
+      inherit name created maxLayers;
+      tag = version;
+
+      copyToRoot = pkgs.buildEnv {
+        name = "image";
+        paths = [
+          pkgs.cacert
+          package
+          (pkgs.writeTextFile {
+            name = "tmp-file";
+            text = ''
+              dummy file to generate tmpdir
+            '';
+            destination = "/tmp/tmp-file";
+          })
+          # busybox
+        ] ++ buildInputs ++ contents;
+      };
+
+      config = {
+        Env = [
+          "TMPDIR=/tmp"
+        ];
+        Entrypoint = [
+          "${package}/bin/${name}"
+        ];
+      } // config;
+    };
 in
 {
   devShell =
@@ -91,7 +131,7 @@ in
     , buildInputs
     , nativeBuildInputs
     , postInstall ? ""
-    }: (pkgs.buildGoModule {
+    }: (pkgs.buildGoModule.override { go = pkgs.go; } {
       inherit src version ldflags buildInputs nativeBuildInputs;
 
       pname = name;
@@ -124,37 +164,17 @@ in
   docker-image =
     { name
     , version
+    , created
     , package
     , buildInputs
+    , maxLayers ? 100
     , contents ? [ ]
     , config ? { }
     }:
-    pkgs.dockerTools.buildLayeredImage {
-      inherit name;
-      tag = version;
-      created = "now";
-
-      contents = with pkgs; [
-        cacert
-        package
-        (writeTextFile {
-          name = "tmp-file";
-          text = ''
-            dummy file to generate tmpdir
-          '';
-          destination = "/tmp/tmp-file";
-        })
-        # busybox
-      ] ++ buildInputs ++ contents;
-      config = {
-        Env = [
-          "TMPDIR=/tmp"
-        ];
-        Entrypoint = [
-          "${package}/bin/${name}"
-        ];
-      } // config;
-    };
-
+    pkgs.runCommand "image-as-dir" { } ''
+      ${(dockerImageFn {
+        inherit name version created package buildInputs maxLayers contents config;
+      }).copyTo}/bin/copy-to dir:$out
+    '';
 }
 
