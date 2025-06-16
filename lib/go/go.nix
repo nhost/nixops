@@ -17,11 +17,12 @@ let
     , package
     , buildInputs
     , maxLayers
+    , arch ? pkgs.go.GOARCH
     , contents ? [ ]
     , config ? { }
     }:
     nix2containerPkgs.nix2container.buildImage {
-      inherit name created maxLayers;
+      inherit name created maxLayers arch;
       tag = version;
 
       copyToRoot = pkgs.buildEnv {
@@ -168,12 +169,13 @@ in
     , package
     , buildInputs
     , maxLayers ? 100
+    , arch ? pkgs.go.GOARCH
     , contents ? [ ]
     , config ? { }
     }:
     pkgs.runCommand "image-as-dir" { } ''
       ${(dockerImageFn {
-        inherit name version created package buildInputs maxLayers contents config;
+        inherit name version created package buildInputs maxLayers arch contents config;
       }).copyTo}/bin/copy-to dir:$out
     '';
 }
