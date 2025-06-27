@@ -28,7 +28,6 @@ let
       copyToRoot = pkgs.buildEnv {
         name = "image";
         paths = [
-          pkgs.cacert
           package
           (pkgs.writeTextFile {
             name = "tmp-file";
