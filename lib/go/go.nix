@@ -28,7 +28,6 @@ let
       copyToRoot = pkgs.buildEnv {
         name = "image";
         paths = [
-          pkgs.cacert
           package
           (pkgs.writeTextFile {
             name = "tmp-file";
@@ -44,6 +43,7 @@ let
       config = {
         Env = [
           "TMPDIR=/tmp"
+          "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
         ];
         Entrypoint = [
           "${package}/bin/${name}"
