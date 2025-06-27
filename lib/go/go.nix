@@ -44,6 +44,7 @@ let
       config = {
         Env = [
           "TMPDIR=/tmp"
+          "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
         ];
         Entrypoint = [
           "${package}/bin/${name}"
