@@ -64,7 +64,7 @@
               # postgresql_15_13-client
               # postgresql_16_9-client
               # postgresql_17_5-client
-              postgresql_14_18
+              # postgresql_14_18
               # postgresql_15_13
               # postgresql_16_9
               # postgresql_17_5
