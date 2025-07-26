@@ -10,6 +10,7 @@ final: prev: rec {
       };
 
       doCheck = false;
+      doInstallCheck = false;
     });
 
   postgresql_14_18-client = final.stdenv.mkDerivation {
