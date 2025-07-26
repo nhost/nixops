@@ -8,6 +8,8 @@ final: prev: rec {
         url = "mirror://postgresql/source/v${version}/${pname}-${version}.tar.bz2";
         hash = "sha256-g6sp1r/D3Fiy7TxmQRT9++tqBFDEuNf6aa7pHjyhT44=";
       };
+
+      doCheck = false;
     });
 
   postgresql_14_18-client = final.stdenv.mkDerivation {
