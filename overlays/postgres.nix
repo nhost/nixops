@@ -17,8 +17,6 @@ final: prev: rec {
     pname = "postgresql-client";
     version = postgresql_14_18.version;
 
-    buildInputs = [ postgresql_14_18 ];
-
     phases = [ "installPhase" ];
 
     installPhase = ''
@@ -44,8 +42,6 @@ final: prev: rec {
   postgresql_15_13-client = final.stdenv.mkDerivation {
     pname = "postgresql-client";
     version = postgresql_15_13.version;
-
-    buildInputs = [ postgresql_15_13 ];
 
     phases = [ "installPhase" ];
 
@@ -73,8 +69,6 @@ final: prev: rec {
     pname = "postgresql-client";
     version = postgresql_16_9.version;
 
-    buildInputs = [ postgresql_16_9 ];
-
     phases = [ "installPhase" ];
 
     installPhase = ''
@@ -100,8 +94,6 @@ final: prev: rec {
   postgresql_17_5-client = final.stdenv.mkDerivation {
     pname = "postgresql-client";
     version = postgresql_17_5.version;
-
-    buildInputs = [ postgresql_17_5 ];
 
     phases = [ "installPhase" ];
 
