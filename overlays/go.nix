@@ -93,12 +93,12 @@ final: prev: rec {
   };
 
   oapi-codegen = prev.oapi-codegen.overrideAttrs (oldAttrs: rec {
-    version = "2.5.0";
+    version = "2.6.0-beta0";
     src = final.fetchFromGitHub {
-      owner = "oapi-codegen";
+      owner = "dbarrosop";
       repo = "oapi-codegen";
-      rev = "v${version}";
-      hash = "sha256-Z10rJMancQLefyW0wXWaODIKfSY+4b3T+TAro//xsAQ=";
+      rev = "6225e75bb76ba1fa15113a7fc6aace55ad12862c";
+      hash = "sha256-sXmHVIFKxnogdr9qULZ2Io7cQGG6sMMx0ZLskjz1mOc=";
     };
     vendorHash = "sha256-obpY7ZATebI/7bkPMidC83xnN60P0lZsJhSuKr2A5T4=";
   });
